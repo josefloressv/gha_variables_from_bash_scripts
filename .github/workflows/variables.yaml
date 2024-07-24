@@ -43,3 +43,5 @@ jobs:
         run: |
           echo "FOO is $FOO"
           echo "BAR is $BAR"
+      - name: Use the output from job1
+        run: echo "The output from job1 was: ${{ needs.job1.outputs.foo_output }}"
