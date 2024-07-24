@@ -12,6 +12,8 @@ jobs:
     outputs:
       foo_output: ${{ steps.set-output.outputs.foo_output }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Print global variable
         run: echo $GLOBAL_VAR
       - name: Create variables
@@ -33,6 +35,8 @@ jobs:
     env:
       FOO_OUTPUT: ${{ needs.job1.outputs.foo_output }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Print global variable
         run: echo $GLOBAL_VAR
       - name: Try to use environment variables from previous job
