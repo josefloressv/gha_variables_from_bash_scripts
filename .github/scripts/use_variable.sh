@@ -2,6 +2,5 @@
 set -eo pipefail
 
 # Create Job environment variables
-echo "FOO=bar" >> $GITHUB_ENV
-echo "BAR=baz" >> $GITHUB_ENV
+echo "The output from job1 was: $FOO_OUTPUT"
 
