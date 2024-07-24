@@ -1,0 +1,48 @@
+name: Variable test
+
+on:
+  push
+
+env:
+  GLOBAL_VAR: "This is a global variable"
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      foo_output: ${{ steps.set-output.outputs.foo_output }}
+    steps:
+      - name: Print global variable
+        run: echo $GLOBAL_VAR
+      - name: Create variables
+        run: |
+          chmod +x .github/scripts/create_variable.sh
+          ./.github/scripts/create_variable.sh
+      - name: Use the environment variables
+        run: |
+          echo "FOO is $FOO"
+          echo "BAR is $BAR"
+      - name: Create output
+        id: set-output
+        run: |
+          chmod +x .github/scripts/create_output.sh
+          ./.github/scripts/create_output.sh
+  job2:
+    runs-on: ubuntu-latest
+    env:
+      FOO_OUTPUT: ${{ needs.job1.outputs.foo_output }}"
+    steps:
+      - name: Print global variable
+        run: echo $GLOBAL_VAR
+      - name: Try to use environment variables from previous job
+        run: |
+          echo "FOO is $FOO"
+          echo "BAR is $BAR"
+      - name: Use the output from job1
+        run: echo "The output from job1 was: ${{ needs.job1.outputs.foo_output }}"
+      - name: Use the variable created from output in job1
+        run: echo "The output from job1 was: $FOO_OUTPUT"
+      - name: Use the variable created from output in job1 in a bash script
+        run: |
+          chmod +x .github/scripts/use_variable.sh
+          ./.github/scripts/use_variable.sh
