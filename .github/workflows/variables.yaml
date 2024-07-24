@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: job1
     env:
-      FOO_OUTPUT: ${{ needs.job1.outputs.foo_output }}"
+      FOO_OUTPUT: ${{ needs.job1.outputs.foo_output }}
     steps:
       - name: Print global variable
         run: echo $GLOBAL_VAR
