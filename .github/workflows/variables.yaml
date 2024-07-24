@@ -30,7 +30,6 @@ jobs:
           chmod +x .github/scripts/create_output.sh
           ./.github/scripts/create_output.sh
   job2:
-    name: job2-${{ FOO }}
     runs-on: ubuntu-latest
     needs: job1
     env:
